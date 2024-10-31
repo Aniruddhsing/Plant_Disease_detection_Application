@@ -7,7 +7,11 @@ import matplotlib.pyplot as plt
 
 # Load the TensorFlow model
 MODEL_PATH = r"C:\Users\sanir\OneDrive\Documents\Plant Disease detection\models\potatoesnew.keras"
-MODEL = tf.keras.models.load_model(MODEL_PATH)
+try:
+    MODEL = tf.keras.models.load_model(MODEL_PATH)
+except Exception as e:
+    st.error(f"Error loading model: {e}")
+    st.stop()  # Stop the app if the model can't be loaded
 
 CLASS_NAMES = ["Early Blight", "Late Blight", "Healthy"]
 
@@ -26,11 +30,8 @@ app_mode = st.sidebar.selectbox("Select Page", ["Home", "About", "Disease Recogn
 # Main Page
 if app_mode == "Home":
     st.header("🌿 PLANT DISEASE RECOGNITION SYSTEM 🌿")
-    
-    # Set the image path
-    image_path = os.path.join("images", "plant.png")  # Adjusted path for deployment
+    image_path = os.path.join("..", "images", "plant.png")
 
-    # Check if the image exists before loading
     if os.path.exists(image_path):
         st.image(image_path, use_column_width=True)
     else:
@@ -38,7 +39,6 @@ if app_mode == "Home":
 
     st.markdown("""
     Welcome to the Plant Disease Recognition System! 🌿🔍
-    
     This system uses a deep learning model to identify plant diseases based on images.
     Simply navigate to the "Disease Recognition" page to upload an image of a plant leaf,
     and the model will predict its health status.
@@ -59,11 +59,10 @@ elif app_mode == "About":
     The model has been trained using TensorFlow and Keras to provide accurate predictions.
     """)
 
-    # Sample Images
     sample_images = {
-        "Early Blight": os.path.join("images", "earlyblight.jpg"),
-        "Late Blight": os.path.join("images", "lateblight.jpg"),
-        "Healthy": os.path.join("images", "healthy.jpg"),
+        "Early Blight": os.path.join("..", "images", "earlyblight.jpg"),
+        "Late Blight": os.path.join("..", "images", "lateblight.jpg"),
+        "Healthy": os.path.join("..", "images", "healthy.jpg"),
     }
     
     col1, col2, col3 = st.columns(3)
@@ -83,13 +82,11 @@ elif app_mode == "Disease Recognition":
         image = Image.open(test_image)
         st.image(image, caption="Uploaded Image", use_column_width=True)
 
-        # Predict button
         if st.button("Predict"):
             st.snow()  # Show loading animation
             class_name, confidence = model_prediction(image)
             st.success(f"Model predicts: {class_name} with confidence {confidence:.2f}")
 
-            # Display prediction confidence as a bar chart
             predictions = MODEL.predict(np.expand_dims(image.resize((256, 256)), axis=0))
             plt.figure(figsize=(10, 5))
             plt.bar(CLASS_NAMES, predictions[0], color=['lightcoral', 'lightblue', 'lightgreen'])
@@ -98,7 +95,6 @@ elif app_mode == "Disease Recognition":
             plt.title('Prediction Confidence')
             st.pyplot(plt)
 
-            # Display recommendation based on prediction
             if class_name == "Early Blight":
                 st.warning("Recommendation: Apply appropriate fungicide and improve air circulation.")
             elif class_name == "Late Blight":
