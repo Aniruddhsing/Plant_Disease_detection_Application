@@ -59,11 +59,13 @@ elif app_mode == "About":
     The model has been trained using TensorFlow and Keras to provide accurate predictions.
     """)
 
+    # Sample Images
     sample_images = {
-        "Early Blight": os.path.join("..", "images", "earlyblight.jpg"),
-        "Late Blight": os.path.join("..", "images", "lateblight.jpg"),
-        "Healthy": os.path.join("..", "images", "healthy.jpg"),
+        "Early Blight": os.path.join("images", "earlyblight.jpg"),
+        "Late Blight": os.path.join("images", "lateblight.jpg"),
+        "Healthy": os.path.join("images", "healthy.jpg"),
     }
+
     
     col1, col2, col3 = st.columns(3)
     with col1:
