@@ -30,7 +30,7 @@ app_mode = st.sidebar.selectbox("Select Page", ["Home", "About", "Disease Recogn
 # Main Page
 if app_mode == "Home":
     st.header("🌿 PLANT DISEASE RECOGNITION SYSTEM 🌿")
-    image_path = os.path.join("..", "images", "plant.png")
+    image_path = os.path.join( "images", "plant.png")
 
     if os.path.exists(image_path):
         st.image(image_path, use_column_width=True)
