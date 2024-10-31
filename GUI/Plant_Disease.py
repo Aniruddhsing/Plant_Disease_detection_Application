@@ -5,8 +5,9 @@ from PIL import Image
 import os
 import matplotlib.pyplot as plt
 
-
-MODEL = tf.keras.models.load_model(r"C:\Users\sanir\OneDrive\Documents\Plant Disease detection\models\potatoesnew.keras")
+# Load the TensorFlow model
+MODEL_PATH = r"C:\Users\sanir\OneDrive\Documents\Plant Disease detection\models\potatoesnew.keras"
+MODEL = tf.keras.models.load_model(MODEL_PATH)
 
 CLASS_NAMES = ["Early Blight", "Late Blight", "Healthy"]
 
@@ -27,7 +28,7 @@ if app_mode == "Home":
     st.header("🌿 PLANT DISEASE RECOGNITION SYSTEM 🌿")
     
     # Set the image path
-    image_path = os.path.join("..", "images", "plant.png")  # Adjusted path for deployment
+    image_path = os.path.join("images", "plant.png")  # Adjusted path for deployment
 
     # Check if the image exists before loading
     if os.path.exists(image_path):
@@ -60,9 +61,9 @@ elif app_mode == "About":
 
     # Sample Images
     sample_images = {
-        "Early Blight": os.path.join("..", "images", "earlyblight.jpg"),
-        "Late Blight": os.path.join("..", "images", "lateblight.jpg"),
-        "Healthy": os.path.join("..", "images", "healthy.jpg"),
+        "Early Blight": os.path.join("images", "earlyblight.jpg"),
+        "Late Blight": os.path.join("images", "lateblight.jpg"),
+        "Healthy": os.path.join("images", "healthy.jpg"),
     }
     
     col1, col2, col3 = st.columns(3)
@@ -90,6 +91,7 @@ elif app_mode == "Disease Recognition":
 
             # Display prediction confidence as a bar chart
             predictions = MODEL.predict(np.expand_dims(image.resize((256, 256)), axis=0))
+            plt.figure(figsize=(10, 5))
             plt.bar(CLASS_NAMES, predictions[0], color=['lightcoral', 'lightblue', 'lightgreen'])
             plt.xlabel('Classes')
             plt.ylabel('Confidence')
