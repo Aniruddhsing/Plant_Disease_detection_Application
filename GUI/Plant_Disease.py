@@ -5,8 +5,8 @@ from PIL import Image
 import os
 import matplotlib.pyplot as plt
 
-# Load the TensorFlow model
-MODEL_PATH = r"C:\Users\sanir\OneDrive\Documents\Plant Disease detection\models\potatoesnew.keras"
+# Load the TensorFlow model using a relative path
+MODEL_PATH = "models/potatoesnew.keras"
 try:
     MODEL = tf.keras.models.load_model(MODEL_PATH)
 except Exception as e:
@@ -88,6 +88,7 @@ elif app_mode == "Disease Recognition":
             st.success(f"Model predicts: {class_name} with confidence {confidence:.2f}")
 
             predictions = MODEL.predict(np.expand_dims(image.resize((256, 256)), axis=0))
+            plt.clf()  # Clear the previous plot
             plt.figure(figsize=(10, 5))
             plt.bar(CLASS_NAMES, predictions[0], color=['lightcoral', 'lightblue', 'lightgreen'])
             plt.xlabel('Classes')
