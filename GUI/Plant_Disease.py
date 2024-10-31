@@ -5,9 +5,8 @@ from PIL import Image
 import os
 import matplotlib.pyplot as plt
 
-# Load the TensorFlow model once
-MODEL_PATH = os.path.join("..", "models", "potatoesnew.keras")    # Adjusted path for deployment
-MODEL = tf.keras.models.load_model(MODEL_PATH)
+
+MODEL = tf.keras.models.load_model(r"C:\Users\sanir\OneDrive\Documents\Plant Disease detection\models\potatoesnew.keras")
 
 CLASS_NAMES = ["Early Blight", "Late Blight", "Healthy"]
 
