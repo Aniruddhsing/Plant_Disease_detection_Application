@@ -1,4 +1,4 @@
-import streamlit as st # type: ignore
+import streamlit as st
 import tensorflow as tf
 import numpy as np
 from PIL import Image
@@ -6,7 +6,7 @@ import os
 import matplotlib.pyplot as plt
 
 # Load the TensorFlow model once
-MODEL_PATH = os.path.join("..", "models", "potatoesnew.keras")  # Adjusted relative path
+MODEL_PATH = os.path.join("..", "models", "potatoesnew.keras")    # Adjusted path for deployment
 MODEL = tf.keras.models.load_model(MODEL_PATH)
 
 CLASS_NAMES = ["Early Blight", "Late Blight", "Healthy"]
@@ -28,7 +28,7 @@ if app_mode == "Home":
     st.header("🌿 PLANT DISEASE RECOGNITION SYSTEM 🌿")
     
     # Set the image path
-    image_path = os.path.join("..", "images", "plant.png")  # Adjusted relative path
+    image_path = os.path.join("..", "images", "plant.png")  # Adjusted path for deployment
 
     # Check if the image exists before loading
     if os.path.exists(image_path):
@@ -38,7 +38,10 @@ if app_mode == "Home":
 
     st.markdown("""
     Welcome to the Plant Disease Recognition System! 🌿🔍
-    ...  # (rest of your markdown text)
+    
+    This system uses a deep learning model to identify plant diseases based on images.
+    Simply navigate to the "Disease Recognition" page to upload an image of a plant leaf,
+    and the model will predict its health status.
     """)
 
 # About Project
@@ -46,7 +49,14 @@ elif app_mode == "About":
     st.header("🔍 About")
     st.markdown("""
     #### About Dataset
-    ...  # (rest of your markdown text)
+    This application is designed to recognize diseases in potato plants.
+    
+    The dataset contains images of potato leaves categorized into three classes:
+    - Early Blight
+    - Late Blight
+    - Healthy
+    
+    The model has been trained using TensorFlow and Keras to provide accurate predictions.
     """)
 
     # Sample Images
